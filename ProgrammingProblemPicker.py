@@ -64,6 +64,7 @@ def generate_random_problem():
 
 def main():
     for Problem_URL in URL:
+        print("retrieving ..............................")
         res = requests.get(Problem_URL, headers=headers)
         soup = bs4.BeautifulSoup(res.text, "lxml")
         # print(Problem_URL)
@@ -73,7 +74,9 @@ def main():
             visit_codeforces(soup)
         if hackerearth.search(Problem_URL):
             visit_hackerearth(soup)
+    print("randomizing problem ..........................")
     generate_random_problem()
+    print("getting Quote Of the Day .....................")
     res = requests.get("http://www.eduro.com/", headers=headers)
     soup = bs4.BeautifulSoup(res.text, "lxml")
     # print(soup.dailyquote.div.p)
@@ -81,14 +84,16 @@ def main():
         print(Todays_problem[i])'''
     os.chdir("/home/darkmatter/Desktop/")
     # print(os.listdir())
-    fw = open("Problem.txt","w")
-    fw.write("\n" + " "*15 + "Quote Of The day : ")
-    fw.write(soup.dailyquote.div.p.string+"\n"*2)
-    fw.write("*" * 200 + "\n"*2)
+    print("writing .......................................")
+    fw = open("Problem.txt", "w")
+    fw.write("\n" + " " * 15 + "Quote Of The day : ")
+    fw.write(soup.dailyquote.div.p.string + "\n" * 2)
+    fw.write("*" * 200 + "\n" * 2)
     for i in range(len(Todays_problem)):
-        fw.write(" "*25 + Todays_problem[i] + "\n"*2)
-        fw.write("*"*150 + "\n"*2)
+        fw.write(" " * 25 + Todays_problem[i] + "\n" * 2)
+        fw.write("*" * 150 + "\n" * 2)
     fw.close()
+    print("Done ...........................................")
 
 
 if __name__ == '__main__':
